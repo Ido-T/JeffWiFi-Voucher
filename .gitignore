@@ -1,0 +1,41 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environments
+venv/
+.env/
+
+# SQLite temporary files
+*.db-shm
+*.db-wal
+
+# IDE files
+.vscode/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.log
+
+
+# JeffWiFi generated data
+
+# SQLite database
+database/*.db
+
+# Generated voucher files
+vouchers/
+
+# MikroTik RouterOS exports
+imports/
+
+# Export history files
+exports/
+
+# Project backups
+backups/
