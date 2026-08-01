@@ -1,47 +1,4 @@
-from config import PLANS
-from database.database_manager import get_connection
-from voucher_manager import sell_voucher
-
-
-def get_available_voucher(plan_name):
-
-    connection = get_connection()
-
-    cursor = connection.cursor()
-
-
-    cursor.execute(
-        """
-        SELECT voucher_code
-
-        FROM vouchers
-
-        WHERE plan = ?
-
-        AND status = 'AVAILABLE'
-
-        ORDER BY id
-
-        LIMIT 1
-
-        """,
-        (
-            plan_name,
-        )
-    )
-
-
-    row = cursor.fetchone()
-
-    connection.close()
-
-
-    if row:
-        return row["voucher_code"]
-
-
-    return None
-
+from voucher_manager import search_voucher, sell_voucher
 
 
 print("=" * 35)
@@ -51,73 +8,71 @@ print("=" * 35)
 
 while True:
 
-    print("\nAVAILABLE PLANS\n")
+    print("\n")
+
+    voucher_code = input(
+        "Enter voucher code (or type exit): "
+    ).strip()
 
 
-    for key, plan in PLANS.items():
+    if voucher_code.lower() in [
+        "exit",
+        "quit",
+        "q"
+    ]:
 
-        print(
-            f"{key} - {plan['name']} "
-            f"({plan['price']} Gdes)"
-        )
-
-
-    print("5 - Exit")
-
-
-    choice = input(
-        "\nChoose plan: "
-    )
-
-
-    if choice == "5":
+        print("\nClosing Sales Console.")
 
         break
 
 
-    if choice not in PLANS:
 
-        print(
-            "Invalid selection."
-        )
-
-        continue
-
-
-
-    plan = PLANS[choice]
-
-
-    voucher = get_available_voucher(
-        plan["name"]
+    voucher = search_voucher(
+        voucher_code
     )
 
 
     if not voucher:
 
+        continue
+
+
+
+    status = voucher[2]
+
+
+    if status != "AVAILABLE":
+
+        print("\nCannot sell this voucher.")
+
         print(
-            "\nNo voucher available for this plan."
+            "Current status:",
+            status
+        )
+
+        print(
+            "Only AVAILABLE vouchers can be sold."
         )
 
         continue
 
 
 
-    print("\nVoucher Found")
+    print("\nSale Information")
     print("----------------")
     print(
-        "Code:",
-        voucher
+        "Voucher:",
+        voucher[0]
     )
 
     print(
         "Plan:",
-        plan["name"]
+        voucher[1]
     )
 
     print(
         "Price:",
-        plan["price"],
+        voucher[6],
         "Gdes"
     )
 
@@ -129,41 +84,56 @@ while True:
 
     if confirm.lower() == "y":
 
+
         sell_voucher(
-            voucher
+            voucher_code
         )
 
 
-        print("\nCUSTOMER VOUCHER")
-        print("----------------")
+        print("\n")
+        print("=" * 35)
+        print("      CUSTOMER VOUCHER")
+        print("=" * 35)
+
+
         print(
             "Voucher Code:",
-            voucher
+            voucher[0]
         )
+
 
         print(
-            "\nInstructions:"
+            "Plan:",
+            voucher[1]
         )
 
+
+        print(
+            "Price:",
+            voucher[6],
+            "Gdes"
+        )
+
+
+        print("\nInstructions:")
         print(
             "1. Connect to JeffWiFi"
         )
 
         print(
-            "2. Open browser"
+            "2. Open your browser"
         )
 
         print(
             "3. Enter your voucher code"
         )
 
-        print(
-            "\nThank you!"
-        )
+
+        print("\nThank you!")
 
 
     else:
 
         print(
-            "Sale cancelled."
+            "\nSale cancelled."
         )
