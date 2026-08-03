@@ -176,7 +176,8 @@ with open(
 
 import_file = save_import_file(
     vouchers,
-    plan["profile"]
+    plan["profile"],
+    plan["limit_uptime"]
 )
 
 

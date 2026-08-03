@@ -39,3 +39,13 @@ exports/
 
 # Project backups
 backups/
+
+
+# Generated receipts
+receipts/
+
+# Database backups
+backups/
+
+# Local database
+database/*.db

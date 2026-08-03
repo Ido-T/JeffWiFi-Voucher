@@ -86,7 +86,8 @@ PLANS = {
         "name": "2 HOURS",
         "prefix": "2H-",
         "profile": "2-HOURS",
-        "price": 25
+        "price": 25,
+        "limit_uptime": "2h"
 
     },
 
@@ -96,7 +97,8 @@ PLANS = {
         "name": "4 HOURS",
         "prefix": "4H-",
         "profile": "4-HOURS",
-        "price": 50
+        "price": 50,
+        "limit_uptime": "4h"
 
     },
 
@@ -106,7 +108,8 @@ PLANS = {
         "name": "24 HOURS",
         "prefix": "24H-",
         "profile": "24-HOURS",
-        "price": 100
+        "price": 100,
+        "limit_uptime": "24h"
 
     },
 
@@ -116,7 +119,8 @@ PLANS = {
         "name": "PREMIUM 7 DAYS",
         "prefix": "7D-",
         "profile": "PREMIUM-7DAYS",
-        "price": 700
+        "price": 700,
+        "limit_uptime": "7d"
 
     }
 
